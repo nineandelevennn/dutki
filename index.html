@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full overflow-hidden">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Дутки Шаника — Главная</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandYellow: '#FDE047',
+            brandYellowLight: '#FEF08A',
+            brandYellowDark: '#EAB308',
+            brandPurple: '#A855F7',
+            brandPurpleDark: '#7E22CE',
+            brandPink: '#E879F9',
+            brandDark: '#18181B',
+            brandGray: '#27272A'
+          },
+          fontFamily: {
+            sans: ['Rubik', 'sans-serif'],
+            handwritten: ['Caveat', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Strict viewport lockdown to 100dvh with zero page scrolling */
+    html, body {
+      height: 100dvh !important;
+      max-height: 100dvh !important;
+      overflow: hidden !important;
+      margin: 0;
+      padding: 0;
+      touch-action: manipulation;
+    }
+
+    /* Polka dot background inspired by logo */
+    body {
+      background-color: #FAF8F5;
+      background-image: radial-gradient(#FDE047 1px, transparent 1px), radial-gradient(#C084FC 1px, #FAF8F5 1px);
+      background-size: 28px 28px;
+      background-position: 0 0, 14px 14px;
+    }
+  </style>
+</head>
+
+<body class="h-full max-h-full overflow-hidden text-brandDark flex flex-col justify-between items-center px-3 py-2 font-sans box-border select-none">
+
+  <!-- Header Branding -->
+  <header class="w-full max-w-sm mx-auto flex-none flex justify-center items-center h-14">
+    <div class="inline-flex items-center gap-3 bg-white px-3.5 py-1.5 rounded-full shadow-md border-2 border-brandDark">
+      <!-- Logo Avatar -->
+      <div class="w-9 h-9 rounded-full bg-brandYellow border-2 border-brandDark flex flex-col items-center justify-center shadow-inner flex-shrink-0">
+        <span class="font-handwritten text-[11px] font-bold leading-none text-brandDark">Дутки</span>
+        <span class="font-handwritten text-[11px] font-bold leading-none text-brandPurpleDark">Шаника</span>
+      </div>
+      <div class="text-left pr-1">
+        <h1 class="text-sm font-black tracking-tight text-brandDark leading-none">
+          dutki.shanika
+        </h1>
+        <p class="text-[10px] font-bold text-brandPurpleDark flex items-center gap-1 mt-0.5">
+          <span>Выбери сборник дуток</span> 📚
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="w-full max-w-sm mx-auto flex-1 flex flex-col justify-center items-center gap-3 my-auto overflow-hidden">
+    
+    <!-- "Дутка дня" Box (Daily Joke) -->
+    <div class="w-full bg-white rounded-2xl p-3.5 shadow-xl border-3 border-brandDark flex flex-col justify-between relative">
+      <!-- Top Badge -->
+      <div class="absolute -top-3 right-4 bg-brandPurple border-2 border-brandDark text-white font-black text-[10px] uppercase tracking-wider px-3 py-0.5 rounded-full shadow-sm z-10 flex items-center gap-1">
+        <i class="fa-solid fa-star text-brandYellow text-[9px]"></i>
+        <span>Дутка дня</span>
+      </div>
+
+      <div class="pt-1">
+        <!-- Question (Large Text) -->
+        <div class="text-[10px] font-bold text-brandPurpleDark uppercase tracking-widest mb-0.5 flex items-center gap-1">
+          <i class="fa-solid fa-calendar-day text-[10px]"></i> Сегодняшний вопрос:
+        </div>
+        <h2 id="daily-question" class="text-sm sm:text-base font-extrabold text-brandDark leading-snug line-clamp-2 min-h-[40px] flex items-center">
+          Загрузка шутки дня...
+        </h2>
+      </div>
+
+      <!-- Divider -->
+      <div class="my-2 border-t-2 border-dashed border-purple-100"></div>
+
+      <!-- Answer (Smaller Text) -->
+      <div>
+        <div class="text-[9px] font-bold text-purple-400 uppercase tracking-widest mb-0.5 flex items-center gap-1">
+          <i class="fa-solid fa-lightbulb text-[9px]"></i> Ответ:
+        </div>
+        <p id="daily-answer" class="text-xs sm:text-sm font-extrabold text-brandPurpleDark leading-tight">
+          ...
+        </p>
+      </div>
+    </div>
+
+    <!-- Volume Selection Title -->
+    <div class="w-full flex items-center justify-between px-1">
+      <span class="text-xs font-black uppercase tracking-wider text-brandDark flex items-center gap-1.5">
+        <i class="fa-solid fa-layer-group text-brandPurple"></i> Выберите том:
+      </span>
+      <span class="text-[10px] font-bold text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full border border-purple-300">
+        4 Тома
+      </span>
+    </div>
+
+    <!-- Volumes Grid (4 Volumes) -->
+    <div class="w-full grid grid-cols-2 gap-2.5">
+      
+      <!-- Volume 1 Button -->
+      <a href="aaa01/index.html" class="group bg-brandYellow hover:bg-brandYellowDark text-brandDark p-3 rounded-2xl border-2 border-brandDark shadow-[0_4px_0_#18181B] active:shadow-[0_1px_0_#18181B] active:translate-y-1 transition-all duration-150 flex flex-col justify-between h-[82px] relative overflow-hidden">
+        <div class="flex justify-between items-start">
+          <span class="text-xs font-black uppercase tracking-wider bg-white/80 px-2 py-0.5 rounded-md border border-brandDark text-[10px]">aaa01</span>
+          <i class="fa-solid fa-fire text-brandPurpleDark text-sm group-hover:scale-125 transition-transform"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-black leading-none">Том 1</h3>
+          <p class="text-[10px] font-bold text-gray-800 mt-1 flex items-center gap-1">
+            <span>Открыть</span> <i class="fa-solid fa-arrow-right text-[8px]"></i>
+          </p>
+        </div>
+      </a>
+
+      <!-- Volume 2 Button -->
+      <a href="aaa02/index.html" class="group bg-brandPurple hover:bg-brandPurpleDark text-white p-3 rounded-2xl border-2 border-brandDark shadow-[0_4px_0_#18181B] active:shadow-[0_1px_0_#18181B] active:translate-y-1 transition-all duration-150 flex flex-col justify-between h-[82px] relative overflow-hidden">
+        <div class="flex justify-between items-start">
+          <span class="text-xs font-black uppercase tracking-wider bg-brandDark text-brandYellow px-2 py-0.5 rounded-md border border-brandDark text-[10px]">aaa02</span>
+          <i class="fa-solid fa-bolt text-brandYellow text-sm group-hover:scale-125 transition-transform"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-black leading-none">Том 2</h3>
+          <p class="text-[10px] font-bold text-purple-200 mt-1 flex items-center gap-1">
+            <span>Открыть</span> <i class="fa-solid fa-arrow-right text-[8px]"></i>
+          </p>
+        </div>
+      </a>
+
+      <!-- Volume 3 Button -->
+      <a href="aaa03/index.html" class="group bg-white hover:bg-purple-50 text-brandDark p-3 rounded-2xl border-2 border-brandDark shadow-[0_4px_0_#18181B] active:shadow-[0_1px_0_#18181B] active:translate-y-1 transition-all duration-150 flex flex-col justify-between h-[82px] relative overflow-hidden">
+        <div class="flex justify-between items-start">
+          <span class="text-xs font-black uppercase tracking-wider bg-purple-100 text-brandPurpleDark px-2 py-0.5 rounded-md border border-purple-300 text-[10px]">aaa03</span>
+          <i class="fa-solid fa-bomb text-brandPurple text-sm group-hover:scale-125 transition-transform"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-black leading-none text-brandDark">Том 3</h3>
+          <p class="text-[10px] font-bold text-gray-600 mt-1 flex items-center gap-1">
+            <span>Открыть</span> <i class="fa-solid fa-arrow-right text-[8px]"></i>
+          </p>
+        </div>
+      </a>
+
+      <!-- Volume 4 Button -->
+      <a href="aaa04/index.html" class="group bg-brandYellowLight hover:bg-brandYellow text-brandDark p-3 rounded-2xl border-2 border-brandDark shadow-[0_4px_0_#18181B] active:shadow-[0_1px_0_#18181B] active:translate-y-1 transition-all duration-150 flex flex-col justify-between h-[82px] relative overflow-hidden">
+        <div class="flex justify-between items-start">
+          <span class="text-xs font-black uppercase tracking-wider bg-white px-2 py-0.5 rounded-md border border-brandDark text-[10px]">aaa04</span>
+          <i class="fa-solid fa-crown text-brandPurpleDark text-sm group-hover:scale-125 transition-transform"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-black leading-none">Том 4</h3>
+          <p class="text-[10px] font-bold text-gray-800 mt-1 flex items-center gap-1">
+            <span>Открыть</span> <i class="fa-solid fa-arrow-right text-[8px]"></i>
+          </p>
+        </div>
+      </a>
+
+    </div>
+
+  </main>
+
+  <!-- Advertising Banner Box (Fixed Height at Bottom) -->
+  <footer class="w-full max-w-sm mx-auto flex-none h-[68px] my-1">
+    <div id="ad-box" class="w-full h-full bg-white px-3 py-2 rounded-xl border border-dashed border-purple-400 shadow-sm relative text-center text-xs flex flex-col justify-center items-center">
+      
+      <!-- Ad Label Badge -->
+      <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-purple-100 border border-brandPurple text-brandPurpleDark font-bold text-[9px] uppercase tracking-wider px-2 py-0.2 rounded-full flex items-center gap-1">
+        <i class="fa-solid fa-bullhorn text-[9px]"></i> Реклама
+      </div>
+
+      <p class="text-[11px] text-gray-800 leading-tight">
+        самая топовая машина - <strong class="text-brandPurpleDark font-bold">chery tiggo 2 pro</strong>; у кого chery tiggo 2 pro, долго в девственниках не ходит!
+      </p>
+      <a href="https://chery.kz" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-bold text-brandPurpleDark hover:text-purple-900 underline underline-offset-2 text-[11px] mt-0.5">
+        <span>перейти на сайт chery</span>
+        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+      </a>
+
+    </div>
+  </footer>
+
+  <script>
+    /*
+    ===================================================================
+    | 💡 ИНСТРУКЦИЯ ПО ЗАПОЛНЕНИЮ "ДУТКИ ДНЯ":                          |
+    | Вносите ваши шутки в массив DAILY_JOKES ниже.                    |
+    | Каждая шутка состоит из вопроса (question) и ответа (answer).   |
+    | Система автоматически выбирает новую шутку каждый день!          |
+    ===================================================================
+    */
+
+    const DAILY_JOKES = [
+      {
+        question: "как что то шутка один?",
+        answer: "шутка номер один"
+      },
+      {
+        question: "как что то шутка два?",
+        answer: "шутка номер два"
+      },
+      {
+        question: "как что то шутка три?",
+        answer: "шутка номер три"
+      },
+      {
+        question: "как что то шутка четыре?",
+        answer: "шутка номер четыре"
+      },
+      {
+        question: "как что то шутка пять?",
+        answer: "шутка номер пять"
+      }
+    ];
+
+    /**
+     * Calculates current day of year (0-365) to cycle jokes daily
+     */
+    function getDayOfYear() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start;
+      const oneDay = 1000 * 60 * 60 * 24;
+      return Math.floor(diff / oneDay);
+    }
+
+    /**
+     * Loads the joke assigned for today
+     */
+    function loadDailyJoke() {
+      const dayOfYear = getDayOfYear();
+      const jokeIndex = dayOfYear % DAILY_JOKES.length;
+      const todayJoke = DAILY_JOKES[jokeIndex];
+
+      const questionEl = document.getElementById('daily-question');
+      const answerEl = document.getElementById('daily-answer');
+
+      if (questionEl && answerEl && todayJoke) {
+        questionEl.textContent = todayJoke.question;
+        answerEl.textContent = todayJoke.answer;
+      }
+    }
+
+    // Initialize daily joke when DOM is ready
+    window.addEventListener('DOMContentLoaded', loadDailyJoke);
+  </script>
+</body>
+</html>
