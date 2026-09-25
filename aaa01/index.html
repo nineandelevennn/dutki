@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full overflow-hidden">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Дутки Шаника — Шутки на каждый день</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandYellow: '#FDE047',
+            brandYellowLight: '#FEF08A',
+            brandYellowDark: '#EAB308',
+            brandPurple: '#A855F7',
+            brandPurpleDark: '#7E22CE',
+            brandPink: '#E879F9',
+            brandDark: '#18181B',
+            brandGray: '#27272A'
+          },
+          fontFamily: {
+            sans: ['Rubik', 'sans-serif'],
+            handwritten: ['Caveat', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Strict viewport lockdown to 100dvh with zero page scrolling */
+    html, body {
+      height: 100dvh !important;
+      max-height: 100dvh !important;
+      overflow: hidden !important;
+      margin: 0;
+      padding: 0;
+      touch-action: manipulation;
+    }
+
+    /* Polka dot background inspired by logo */
+    body {
+      background-color: #FAF8F5;
+      background-image: radial-gradient(#FDE047 1px, transparent 1px), radial-gradient(#C084FC 1px, #FAF8F5 1px);
+      background-size: 28px 28px;
+      background-position: 0 0, 14px 14px;
+    }
+
+    /* Premature button press shake animation */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-5px) rotate(-1deg); }
+      40% { transform: translateX(5px) rotate(1deg); }
+      60% { transform: translateX(-3px); }
+      80% { transform: translateX(3px); }
+    }
+
+    .animate-shake {
+      animation: shake 0.35s ease-in-out;
+    }
+
+    /* Pulse animation once timer finishes */
+    @keyframes readyGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(168, 85, 247, 0); }
+    }
+
+    .animate-ready {
+      animation: readyGlow 1.5s infinite;
+    }
+
+    .progress-bar {
+      transition: width 0.1s linear;
+    }
+  </style>
+</head>
+
+<body class="h-full max-h-full overflow-hidden text-brandDark flex flex-col justify-between items-center px-3 py-2 font-sans box-border select-none">
+
+  <!-- Top Branding Header (Fixed Height) -->
+  <header class="w-full max-w-sm mx-auto flex-none flex justify-center items-center h-14">
+    <div class="inline-flex items-center gap-3 bg-white px-3.5 py-1.5 rounded-full shadow-md border-2 border-brandDark">
+      <!-- Logo Avatar -->
+      <div class="w-9 h-9 rounded-full bg-brandYellow border-2 border-brandDark flex flex-col items-center justify-center shadow-inner flex-shrink-0">
+        <span class="font-handwritten text-[11px] font-bold leading-none text-brandDark">Дутки</span>
+        <span class="font-handwritten text-[11px] font-bold leading-none text-brandPurpleDark">Шаника</span>
+      </div>
+      <div class="text-left pr-1">
+        <h1 class="text-sm font-black tracking-tight text-brandDark leading-none">
+          dutki.shanika
+        </h1>
+        <p class="text-[10px] font-bold text-brandPurpleDark flex items-center gap-1 mt-0.5">
+          <span>Шутки на каждый день</span> 😂
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Card Container (Fixed Dimensions to guarantee ZERO layout shift) -->
+  <main class="w-full max-w-sm mx-auto flex-1 flex flex-col justify-center items-center my-auto overflow-hidden">
+    
+    <!-- Main Card with absolute fixed height container -->
+    <div id="card" class="w-full h-[380px] bg-white rounded-2xl p-4 shadow-xl border-3 border-brandDark flex flex-col justify-between relative">
+      
+      <!-- Top Card Badge -->
+      <div class="absolute -top-3 right-4 bg-brandYellow border-2 border-brandDark text-brandDark font-black text-[10px] uppercase tracking-wider px-3 py-0.5 rounded-full shadow-sm z-10">
+        <i class="fa-solid fa-face-laugh-squint mr-1 text-brandPurpleDark"></i> Дутка
+      </div>
+
+      <!-- 1. Question Box (PRE-RESERVED CONSTANT HEIGHT: 72px) -->
+      <div class="h-[72px] flex flex-col justify-center">
+        <span class="text-[10px] font-bold text-brandPurpleDark uppercase tracking-widest block mb-0.5">Вопрос:</span>
+        <h2 id="question-text" class="text-sm sm:text-base font-extrabold text-brandDark leading-snug line-clamp-3">
+          <!-- Populated by JS -->
+        </h2>
+      </div>
+
+      <!-- 2. Timer & Progress Bar (PRE-RESERVED CONSTANT HEIGHT: 48px) -->
+      <div class="h-[48px] bg-purple-50 p-2 rounded-xl border border-purple-200 flex flex-col justify-center">
+        <div class="flex justify-between items-center mb-1">
+          <span class="text-[11px] font-bold text-brandPurpleDark flex items-center gap-1">
+            <i class="fa-solid fa-clock text-[10px]"></i> Таймер
+          </span>
+          <span id="timer-badge" class="bg-brandPurpleDark text-white text-[10px] font-black px-2 py-0.5 rounded-full min-w-[50px] text-center">
+            8 сек
+          </span>
+        </div>
+        <div class="w-full bg-purple-200 rounded-full h-2 overflow-hidden p-0.5 border border-purple-300">
+          <div id="timer-bar" class="bg-gradient-to-r from-brandYellow to-brandPurple h-full rounded-full progress-bar w-full"></div>
+        </div>
+      </div>
+
+      <!-- 3. Question Action Button ("как?" / "что?") (PRE-RESERVED CONSTANT HEIGHT: 50px) -->
+      <div class="h-[50px] flex items-center">
+        <button id="action-btn" class="w-full h-full rounded-xl font-black text-sm sm:text-base border-2 border-brandDark shadow-[0_4px_0_#18181B] active:shadow-[0_1px_0_#18181B] active:translate-y-0.5 transition-all duration-150 flex items-center justify-center px-2 bg-brandYellow hover:bg-brandYellowDark text-brandDark">
+          <span id="action-btn-text" class="truncate max-w-full">как?</span>
+        </button>
+      </div>
+
+      <!-- 4. Answer Display Box (PRE-RESERVED CONSTANT HEIGHT: 84px) -->
+      <!-- Guaranteed space reservation: ALWAYS exists in layout, zero movement when revealed -->
+      <div id="answer-container" class="h-[84px] p-3 rounded-xl border-2 transition-all duration-200 flex flex-col justify-center bg-purple-50 border-dashed border-purple-200">
+        <!-- Placeholder / Unlocked State Content -->
+        <div id="answer-placeholder" class="flex flex-col items-center justify-center text-purple-300 font-bold text-xs gap-1">
+          <i class="fa-solid fa-lock text-sm"></i>
+          <span>Ответ заблокирован</span>
+        </div>
+
+        <!-- Revealed State Content (Hidden inside pre-allocated container until timer & click) -->
+        <div id="answer-content" class="hidden flex-col justify-center h-full">
+          <div class="text-[10px] uppercase tracking-widest text-brandYellowLight font-extrabold mb-0.5 flex items-center gap-1">
+            <i class="fa-solid fa-lightbulb"></i> Ответ:
+          </div>
+          <div id="answer-text" class="text-sm sm:text-base font-black leading-tight text-white line-clamp-2">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 5. "Другая дутка" Button (Fixed position outside card) -->
+    <div class="mt-3 w-full h-[46px]">
+      <button id="next-joke-btn" class="w-full h-full bg-brandPurple hover:bg-brandPurpleDark text-white font-extrabold text-sm rounded-xl border-2 border-brandDark shadow-[0_3px_0_#18181B] active:shadow-[0_1px_0_#18181B] active:translate-y-0.5 transition-all duration-150 inline-flex items-center justify-center gap-2">
+        <i class="fa-solid fa-rotate-right text-brandYellow text-sm"></i>
+        <span>Другая дутка</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Advertising Banner Box (Fixed Height at Bottom) -->
+  <footer class="w-full max-w-sm mx-auto flex-none h-[68px] my-1">
+    <div id="ad-box" class="w-full h-full bg-white px-3 py-2 rounded-xl border border-dashed border-purple-400 shadow-sm relative text-center text-xs flex flex-col justify-center items-center">
+      
+      <!-- Ad Label Badge -->
+      <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-purple-100 border border-brandPurple text-brandPurpleDark font-bold text-[9px] uppercase tracking-wider px-2 py-0.2 rounded-full flex items-center gap-1">
+        <i class="fa-solid fa-bullhorn text-[9px]"></i> Реклама
+      </div>
+
+      <p class="text-[11px] text-gray-800 leading-tight">
+        самая топовая машина - <strong class="text-brandPurpleDark font-bold">chery tiggo 2 pro</strong>; у кого chery tiggo 2 pro, долго в девственниках не ходит!
+      </p>
+      <a href="https://chery.kz" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-bold text-brandPurpleDark hover:text-purple-900 underline underline-offset-2 text-[11px] mt-0.5">
+        <span>перейти на сайт chery</span>
+        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+      </a>
+
+    </div>
+  </footer>
+
+  <script>
+    /*
+    ===================================================================
+    | APPLICATION STATE & DATASET                                     |
+    ===================================================================
+    */
+
+    const TIMER_DURATION = 8; // 8 seconds countdown
+
+    // Questions dataset
+    const JOKES_DATA = [
+      {
+        question: "как называется китайская бабушка, рядом с которой рискованно?",
+        type: "как?",
+        answer: "апа Сян"
+      },
+      {
+        question: "как называется, когда забеременел от узбека?",
+        type: "как?",
+        answer: "опловотворение"
+      },
+      {
+        question: "что никто не может купить у рыцаря?",
+        type: "что?",
+        answer: "мерч короля Артура"
+      },
+      {
+        question: "что сказал папа-помидор сыну-помидору?",
+        type: "что?",
+        answer: "ты должен быть спелым"
+      }
+    ];
+
+    // Premature warning responses array
+    const PREMATURE_RESPONSES = [
+      "подожди таймер",
+      "кутсей!",
+      "зае*ал, подумай чуть чуть"
+    ];
+
+    let currentJokeIndex = -1;
+    let timeRemaining = TIMER_DURATION;
+    let timerInterval = null;
+    let isTimerFinished = false;
+    let isAnswerRevealed = false;
+
+    // DOM Elements
+    const questionTextEl = document.getElementById('question-text');
+    const timerBadgeEl = document.getElementById('timer-badge');
+    const timerBarEl = document.getElementById('timer-bar');
+    const actionBtn = document.getElementById('action-btn');
+    const actionBtnTextEl = document.getElementById('action-btn-text');
+    
+    const answerContainerEl = document.getElementById('answer-container');
+    const answerPlaceholderEl = document.getElementById('answer-placeholder');
+    const answerContentEl = document.getElementById('answer-content');
+    const answerTextEl = document.getElementById('answer-text');
+    
+    const nextJokeBtn = document.getElementById('next-joke-btn');
+    const cardEl = document.getElementById('card');
+
+    /**
+     * Pick random joke index guarantees no immediate repetition
+     */
+    function getRandomJokeIndex() {
+      if (JOKES_DATA.length <= 1) return 0;
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * JOKES_DATA.length);
+      } while (newIndex === currentJokeIndex);
+      return newIndex;
+    }
+
+    /**
+     * Timer countdown logic
+     */
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeRemaining = TIMER_DURATION;
+      isTimerFinished = false;
+
+      updateTimerUI();
+
+      const tickRate = 100; // tick every 100ms for smooth progress bar
+      timerInterval = setInterval(() => {
+        timeRemaining -= (tickRate / 1000);
+        if (timeRemaining <= 0) {
+          timeRemaining = 0;
+          clearInterval(timerInterval);
+          onTimerFinished();
+        }
+        updateTimerUI();
+      }, tickRate);
+    }
+
+    function updateTimerUI() {
+      const displaySeconds = Math.ceil(timeRemaining);
+      timerBadgeEl.textContent = `${displaySeconds} сек`;
+      
+      const percentage = (timeRemaining / TIMER_DURATION) * 100;
+      timerBarEl.style.width = `${percentage}%`;
+
+      if (percentage <= 25) {
+        timerBarEl.className = "bg-red-500 h-full rounded-full progress-bar w-full";
+      } else if (percentage <= 50) {
+        timerBarEl.className = "bg-amber-400 h-full rounded-full progress-bar w-full";
+      } else {
+        timerBarEl.className = "bg-gradient-to-r from-brandYellow to-brandPurple h-full rounded-full progress-bar w-full";
+      }
+    }
+
+    function onTimerFinished() {
+      isTimerFinished = true;
+      timerBadgeEl.textContent = "Готово!";
+      timerBadgeEl.className = "bg-emerald-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full";
+
+      if (!isAnswerRevealed) {
+        actionBtn.classList.add('animate-ready', 'border-brandPurpleDark');
+      }
+    }
+
+    /**
+     * Load card data
+     */
+    function loadJoke(index) {
+      currentJokeIndex = index;
+      const currentJoke = JOKES_DATA[currentJokeIndex];
+
+      isAnswerRevealed = false;
+      actionBtn.classList.remove('animate-ready', 'border-brandPurpleDark');
+
+      // Populate text
+      questionTextEl.textContent = currentJoke.question;
+      answerTextEl.textContent = currentJoke.answer;
+
+      // Reset action button label
+      actionBtnTextEl.textContent = currentJoke.type;
+
+      // Reset answer container to locked placeholder state without layout shift
+      answerContainerEl.className = "h-[84px] p-3 rounded-xl border-2 transition-all duration-200 flex flex-col justify-center bg-purple-50 border-dashed border-purple-200";
+      answerPlaceholderEl.classList.remove('hidden');
+      answerPlaceholderEl.classList.add('flex');
+      answerContentEl.classList.add('hidden');
+      answerContentEl.classList.remove('flex');
+
+      // Start countdown
+      startTimer();
+    }
+
+    /**
+     * Handle click on question action button ("как?" / "что?")
+     */
+    function handleActionClick() {
+      const currentJoke = JOKES_DATA[currentJokeIndex];
+
+      // 1. CLICK BEFORE TIMER ENDS
+      if (!isTimerFinished) {
+        cardEl.classList.remove('animate-shake');
+        void cardEl.offsetWidth; // Force reflow
+        cardEl.classList.add('animate-shake');
+
+        // Pick warning response
+        const warningType = currentJoke.type === "как?" ? "[как, емое?]" : "[что, емое?]";
+        const allWarnings = [warningType, ...PREMATURE_RESPONSES.map(r => `[${r}]`)];
+        const randomWarning = allWarnings[Math.floor(Math.random() * allWarnings.length)];
+
+        actionBtnTextEl.textContent = randomWarning;
+        return;
+      }
+
+      // 2. CLICK AFTER TIMER ENDS
+      if (isTimerFinished && !isAnswerRevealed) {
+        isAnswerRevealed = true;
+        actionBtn.classList.remove('animate-ready');
+        
+        // Update button text cleanly
+        actionBtnTextEl.innerHTML = `<i class="fa-solid fa-check text-emerald-600 mr-1"></i> Нажми "Другая дутка"`;
+        
+        // Transform answer container to revealed purple state in place
+        answerContainerEl.className = "h-[84px] p-3 rounded-xl border-2 transition-all duration-300 flex flex-col justify-center bg-gradient-to-br from-brandPurpleDark to-brandPurple text-white border-brandDark shadow-md";
+        answerPlaceholderEl.classList.add('hidden');
+        answerPlaceholderEl.classList.remove('flex');
+        answerContentEl.classList.remove('hidden');
+        answerContentEl.classList.add('flex');
+      }
+    }
+
+    // Attach Event Listeners
+    actionBtn.addEventListener('click', handleActionClick);
+    nextJokeBtn.addEventListener('click', () => {
+      loadJoke(getRandomJokeIndex());
+    });
+
+    // Initialize application on load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadJoke(getRandomJokeIndex());
+    });
+  </script>
+</body>
+</html>
