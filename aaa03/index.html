@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Дутки Шаника — Том не готов</title>
+  <style>
+    :root {
+      --bg-color: #FDE047;
+      --card-bg: #18181B;
+      --card-text: #FFFFFF;
+      --accent-purple: #9333EA;
+      --accent-yellow: #FDE047;
+      --border-dark: #18181B;
+      --ad-bg: #27272A;
+      --ad-border: #A855F7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      height: 100dvh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 400px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Шапка / Логотип */
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .logo-circle {
+      width: 68px;
+      height: 68px;
+      background-color: #FDE047;
+      border: 3.5px solid var(--border-dark);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      margin-bottom: 6px;
+    }
+
+    .logo-text-top {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--border-dark);
+      line-height: 1;
+    }
+
+    .logo-text-bottom {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent-purple);
+      line-height: 1;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--border-dark);
+      letter-spacing: -0.5px;
+    }
+
+    /* Карточка с сообщением */
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 24px;
+      padding: 24px 20px;
+      width: 100%;
+      color: var(--card-text);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      border: 3px solid var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+    }
+
+    .message-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: #FDE047;
+      line-height: 1.4;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .btn-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: 800;
+      border-radius: 14px;
+      border: 3px solid var(--border-dark);
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 0 var(--border-dark);
+    }
+
+    .btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--border-dark);
+    }
+
+    /* Кнопка "На главную" */
+    .btn-home {
+      background-color: var(--accent-purple);
+      color: #FFFFFF;
+    }
+
+    .btn-home:hover {
+      background-color: #7E22CE;
+    }
+
+    /* Кнопка "Прочитать рекламу" */
+    .btn-ad {
+      background-color: var(--accent-yellow);
+      color: var(--border-dark);
+    }
+
+    .btn-ad:hover {
+      background-color: #EAB308;
+    }
+
+    /* Рекламный блок */
+    .ad-box {
+      background-color: var(--ad-bg);
+      border: 2px dashed var(--ad-border);
+      border-radius: 16px;
+      padding: 12px;
+      width: 100%;
+      text-align: center;
+      color: #D4D4D8;
+      font-size: 13px;
+      line-height: 1.4;
+      transition: all 0.3s ease;
+      margin-bottom: 8px;
+    }
+
+    .ad-box a {
+      color: #C084FC;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    /* Эффект подсветки рекламы при нажатии на кнопку */
+    .ad-box.highlight {
+      animation: pulse-glow 0.8s ease-in-out 3;
+      border-style: solid;
+      border-color: #FDE047;
+    }
+
+    @keyframes pulse-glow {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0px #FDE047;
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px #FDE047, 0 0 15px #A855F7;
+        background-color: #3F3F46;
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0px #FDE047;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Логотип -->
+    <div class="header">
+      <div class="logo-circle">
+        <span class="logo-text-top">Дутки</span>
+        <span class="logo-text-bottom">Шаника</span>
+      </div>
+      <div class="brand-title">Дутки Шаника</div>
+    </div>
+
+    <!-- Основная карточка с текстом -->
+    <div class="card">
+      <div class="message-text">
+        далваебсын ба, этот том еще не готов. пока почитай рекламу!
+      </div>
+
+      <div class="btn-group">
+        <!-- Кнопка перехода на главную -->
+        <a href="https://nineandelevennn.github.io/dutki/" class="btn btn-home">
+          На главную
+        </a>
+
+        <!-- Кнопка подсвечивания рекламы -->
+        <button class="btn btn-ad" onclick="highlightAd()">
+          Прочитать рекламу
+        </button>
+      </div>
+    </div>
+
+    <!-- Рекламный бокс -->
+    <div class="ad-box" id="adBox">
+      Самая топовая машина — <b>Chery Tiggo 2 Pro</b>; у кого Chery Tiggo 2 Pro, долго в девственниках не ходит! 
+      <br>
+      <a href="https://chery.kz" target="_blank">Перейти на сайт chery.kz</a>
+    </div>
+
+  </div>
+
+  <script>
+    function highlightAd() {
+      const adBox = document.getElementById('adBox');
+      
+      // Перезапускаем анимацию подсветки
+      adBox.classList.remove('highlight');
+      void adBox.offsetWidth; // Триггер reflow для повторного запуска анимации
+      adBox.classList.add('highlight');
+    }
+  </script>
+
+</body>
+</html>
